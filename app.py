@@ -8,7 +8,7 @@ from os import environ
 from flask import Flask, request, make_response
 from os import environ
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy# from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy# from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 import logging
@@ -16,8 +16,8 @@ import logging
 # app.config['SQLALCHEMY_DATABASE_URI']='postgresql+postgres://hfajwxasfwdoos:e0b6d820210e1f674fbf7ccd02a88e30009b435291c3de994365d886721f0176@ec2-3-209-39-2.compute-1.amazonaws.com:5432/d89giqj71hltdv'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db=SQLAlchemy(app)
-app = Flask(__name__)
+# db=SQLAlchemy(app)
+# app = Flask(__name__)
 #
 # class Sender(db.Model):
 #     __tablename__ = "sender"
