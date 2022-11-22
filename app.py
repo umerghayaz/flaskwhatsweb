@@ -381,6 +381,7 @@ def upload_image5():
         #     )
         print(response)
         print('url is',l)
+        
 
         return redirect(url_for('static', filename='images/' + filename), code=301)
 
