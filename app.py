@@ -12,6 +12,8 @@ from flask import Flask
 # from flask_sqlalchemy import SQLAlchemy# from flask_sqlalchemy import SQLAlchemy
 import logging
 app = Flask(__name__)
+from flask_cors import CORS, cross_origin
+CORS(app)
 @cross_origin()
 @app.route('/message', methods=['POST'])
 def create_pet():
