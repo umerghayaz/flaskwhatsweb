@@ -13,8 +13,8 @@ from flask import Flask
 # from flask_sqlalchemy import SQLAlchemy# from flask_sqlalchemy import SQLAlchemy
 import logging
 app = Flask(__name__)
-# from flask_cors import CORS, cross_origin
-# CORS(app)
+from flask_cors import CORS, cross_origin
+CORS(app)
 messenger = WhatsApp(environ.get("TOKEN"), phone_number_id=environ.get("PHONE_NUMBER_ID"))
 
 # @app.route('/sendimage', methods=['POST'])
@@ -188,24 +188,24 @@ def hook():
             else:
                 print("No new message")
     return "ok"
-# @cross_origin()
-# @app.route('/message', methods=['POST'])
-# def create_pet():
-#     pet_data = request.json
-#
-#     name = pet_data['name']
-#     print(name)
-#     messenger = WhatsApp(environ.get("TOKEN"),phone_number_id=environ.get("PHONE_NUMBER_ID"))  # this should be writen as
-#
-#     # For sending  images
-#     # response = messenger.send_image(image=l,recipient_id="923462901820",)
-#     # response = messenger.send_audio(audio=l,recipient_id="923462901820")
-#     # response = messenger.send_video(video=l,recipient_id="923462901820",)
-#     # response = messenger.send_document(document=l, recipient_id="923462901820", )
-#     messenger.send_message(name, recipient_id="923462901820")
-#
-#
-#     return jsonify({"success": True, "response": "Pet added"})
+@cross_origin()
+@app.route('/message', methods=['POST'])
+def create_pet():
+    pet_data = request.json
+
+    name = pet_data['name']
+    print(name)
+    messenger = WhatsApp(environ.get("TOKEN"),phone_number_id=environ.get("PHONE_NUMBER_ID"))  # this should be writen as
+
+    # For sending  images
+    # response = messenger.send_image(image=l,recipient_id="923462901820",)
+    # response = messenger.send_audio(audio=l,recipient_id="923462901820")
+    # response = messenger.send_video(video=l,recipient_id="923462901820",)
+    # response = messenger.send_document(document=l, recipient_id="923462901820", )
+    messenger.send_message(name, recipient_id="923462901820")
+
+
+    return jsonify({"success": True, "response": "Pet added"})
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
