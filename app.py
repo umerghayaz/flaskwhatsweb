@@ -105,7 +105,7 @@ def hook():
                 intractive_type = message_response.get("type")
                 message_id = message_response[intractive_type]["id"]
                 message_text = message_response[intractive_type]["title"]
-                print('intractive_type',intractive_type,'message_id',message_id,'message_text',message_text,'mobile',mobile,'name',name)
+                print('intractive_type',intractive_type,'message_id',message_id,'message_text',message_text)
                 # logging.info(f"Interactive Message; {message_id}: {message_text}")
 
             elif message_type == "location":
@@ -116,7 +116,7 @@ def hook():
                 message_latitude = message_location["latitude"]
                 message_longitude = message_location["longitude"]
                 # pet = Sender(sender_name=name, sender_number=mobile, sender_message_type=type, sender_message=message)
-                print('message_latitude',message_latitude,'message_longitude',message_longitude,'mobile',mobile,'name',name)
+                print('message_latitude',message_latitude,'message_longitude',message_longitude)
                 # logging.info("Location: %s, %s", message_latitude, message_longitude)
 
             elif message_type == "image":
@@ -129,7 +129,7 @@ def hook():
                 print(f"image_url {image_url}")
                 # logging.info(f"{mobile} image_url {image_url}")
                 image_filename = messenger.download_media(image_url, mime_type)
-                print('image_filename',image_filename,'mobile',mobile,'name',name)
+                print('image_filename',image_filename)
                 # print(f"{mobile} sent image {image_filename}")
                 # logging.info('image_filename',image_filename)
 
@@ -143,7 +143,7 @@ def hook():
                 print(f"{mobile} video_url {video_url}")
                 # logging.info(f"{mobile} video_url {video_url}")
                 video_filename = messenger.download_media(video_url, mime_type)
-                print('video_filename', video_filename,'mobile',mobile,'name',name)
+                print('video_filename', video_filename)
                 # print(f"{mobile} sent video {video_filename}")
                 # logging.info('video_filename', video_filename)
 
@@ -156,7 +156,7 @@ def hook():
                 print(f" audio_url {audio_url}")
                 # logging.info(f"{mobile} audio_url {audio_url}")
                 audio_filename = messenger.download_media(audio_url, mime_type)
-                print('audio_filename', audio_filename,'mobile',mobile,'name',name)
+                print('audio_filename', audio_filename)
                 # print(f" sent audio {audio_filename}")
                 # logging.info('audio_filename', audio_filename)
 
@@ -169,7 +169,7 @@ def hook():
                 print(f" file_url {file_url}")
                 # logging.info(f"{mobile} file_url {file_url}")
                 file_filename = messenger.download_media(file_url, mime_type)
-                print('file_filename', file_filename,'mobile',mobile,'name',name)
+                print('file_filename', file_filename)
                 # print(f"{mobile} sent file {file_filename}")
                 # logging.info('file_filename', file_filename)
             else:
