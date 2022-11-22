@@ -8,7 +8,7 @@ import json
 
 from heyoo import WhatsApp
 from os import environ
-from flask import Flask, request, make_response, jsonify, redirect, url_for, flash
+from flask import Flask, request, make_response, jsonify, redirect, url_for, flash, render_template
 from os import environ
 from flask import Flask
 # from flask_sqlalchemy import SQLAlchemy# from flask_sqlalchemy import SQLAlchemy
@@ -24,54 +24,19 @@ messenger = WhatsApp(environ.get("TOKEN"), phone_number_id=environ.get("PHONE_NU
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','wav','mpeg','mp3','mp4'])
-# db = MongoEngine()
-# db.init_app(app)
 
 
 
+@app.route('/')
+def upload_form():
+    return render_template('template.html')
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-# @app.route('/sendimage', methods=['POST'])
 
-# app.config['SQLALCHEMY_DATABASE_URI']='postgresql+psycopg2://wslnapfcxanodr:a7264b32be99407001919e87affb1e06e86a4f8a844daa4eb722678aed8d4cfe@ec2-54-163-34-107.compute-1.amazonaws.com:5432/dfb4pqic2dqauj'
-# app.config['SQLALCHEMY_DATABASE_URI']='postgresql+postgres://hfajwxasfwdoos:e0b6d820210e1f674fbf7ccd02a88e30009b435291c3de994365d886721f0176@ec2-3-209-39-2.compute-1.amazonaws.com:5432/d89giqj71hltdv'
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# db=SQLAlchemy(app)
-# app = Flask(__name__)
-#
-# class Sender(db.Model):
-#     __tablename__ = "sender"
-#     id = db.Column(db.Integer, primary_key=True)
-# #     # email = db.Column(db.String(120), unique=True)
-#     sender_response = db.Column(db.JSON)
-    # sender_name = db. Column(db.String(100), nullable = False)
-    # sender_message = db.Column(db.String(1000), nullable = False)
-    # sender_message_type = db.Column(db.String(1000), nullable=False)
-    # sender_number = db.Column(db.String(1000), nullable=False)
-    # latitude = db.Column(db.Float, index=False, unique=False)
-    # longitude = db.Column(db.Float, index=False, unique=False)
-
-    # def __init__(self, sender_response):
-    #     self.sender_response = sender_response
-    #     # self.sender_name = sender_name
-    #     # self.sender_message = sender_message
-    #     # self.sender_number = sender_number
-    #     # self.latitude = latitude
-    #     # self.longitude = longitude
-    #     # self.sender_message_type = sender_message_type
-    #
-    #
-#     def __repr__(self):
-#         return '<E-mail %r>' % self.sender_response
-#this should be writen as# #WhatsApp(token = "inpust accesstoken", phone_number_id="input phone number id") #messages are not recieved without this pattern
-# #
-# #
 VERIFY_TOKEN = 'umer' #application secret here
-#
-# #to be tested in prod environment
-# messenger = WhatsApp(os.getenv("heroku whatsapp token"),phone_number_id='105582068896304')
-# # VERIFY_TOKEN = "heroku whatsapp token"
+
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 
@@ -425,4 +390,4 @@ def upload_image5():
 
     return jsonify({"success": True, "response": "Pet added"})
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(port=2000, debug=True)
