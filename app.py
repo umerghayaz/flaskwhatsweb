@@ -85,14 +85,14 @@ def hook():
             # db.session.commit()
 
             message_type = messenger.get_message_type(data)
-            logging.info(
-                f"New Message; sender:{mobile} name:{name} type:{message_type}"
-            )
+            # logging.info(
+            #     f"New Message; sender:{mobile} name:{name} type:{message_type}"
+            # )
             if message_type == "text":
                 mobile = messenger.get_mobile(data)
                 name = messenger.get_name(data)
                 message = messenger.get_message(data)
-                logging.info("Message: %s", message,'mobile',mobile,'name',name)
+                # logging.info("Message: %s", message,'mobile',mobile,'name',name)
                 # pet = Sender(sender_name=name, sender_number=mobile, sender_message_type=type,sender_message=message)
 
                 # messenger.send_message(f"Hi {name}, nice to connect with you", mobile)
