@@ -10,7 +10,7 @@ from flask import Flask, request, make_response, jsonify
 from os import environ
 from flask import Flask
 # from flask_sqlalchemy import SQLAlchemy# from flask_sqlalchemy import SQLAlchemy
-
+import logging
 app = Flask(__name__)
 @cross_origin()
 @app.route('/message', methods=['POST'])
@@ -31,7 +31,7 @@ def create_pet():
 
     return jsonify({"success": True, "response": "Pet added"})
 @app.route('/sendimage', methods=['POST'])
-import logging
+
 # app.config['SQLALCHEMY_DATABASE_URI']='postgresql+psycopg2://wslnapfcxanodr:a7264b32be99407001919e87affb1e06e86a4f8a844daa4eb722678aed8d4cfe@ec2-54-163-34-107.compute-1.amazonaws.com:5432/dfb4pqic2dqauj'
 # app.config['SQLALCHEMY_DATABASE_URI']='postgresql+postgres://hfajwxasfwdoos:e0b6d820210e1f674fbf7ccd02a88e30009b435291c3de994365d886721f0176@ec2-3-209-39-2.compute-1.amazonaws.com:5432/d89giqj71hltdv'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
