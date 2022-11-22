@@ -1,3 +1,4 @@
+
 from flask_cors import cross_origin
 from heyoo import WhatsApp
 # messenger = WhatsApp('EAAJVc3j40G8BAO30KsKwZBRDifNf7I9mxfyOIy7GISIEjoF7QZCBJfPexPHGL3eRoOUvLiWInTrmMh32ZBt2GE8IJqWjMZABNSZCf0TFR3y9BBNBH1y0x1rbLNLPHslznC9ZAyZChSWKJaPcUFuzQ2Mmvm3ZAdMOOd4CwIjFMfw7IdmSaQLb5qZAZBWTyfPWuzkbvSzGwKmsLYvgZDZD',  phone_number_id='110829038490956')
@@ -7,16 +8,29 @@ import json
 
 from heyoo import WhatsApp
 from os import environ
-from flask import Flask, request, make_response, jsonify
+from flask import Flask, request, make_response, jsonify, redirect, url_for, flash
 from os import environ
 from flask import Flask
 # from flask_sqlalchemy import SQLAlchemy# from flask_sqlalchemy import SQLAlchemy
 import logging
+
+from werkzeug.utils import secure_filename
+UPLOAD_FOLDER = 'static/images/'
+
 app = Flask(__name__)
 from flask_cors import CORS, cross_origin
 CORS(app)
 messenger = WhatsApp(environ.get("TOKEN"), phone_number_id=environ.get("PHONE_NUMBER_ID"))
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','wav','mpeg','mp3','mp4'])
+# db = MongoEngine()
+# db.init_app(app)
 
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 # @app.route('/sendimage', methods=['POST'])
 
 # app.config['SQLALCHEMY_DATABASE_URI']='postgresql+psycopg2://wslnapfcxanodr:a7264b32be99407001919e87affb1e06e86a4f8a844daa4eb722678aed8d4cfe@ec2-54-163-34-107.compute-1.amazonaws.com:5432/dfb4pqic2dqauj'
@@ -206,6 +220,209 @@ def create_pet():
 
 
     return jsonify({"success": True, "response": "Pet added"})
+@app.route('/sendimage', methods=['POST'])
+def upload_image1():
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        flash('No image selected for uploading')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # file.save(secure_filename(file.filename))
+        # usersave = User( profile_pic=file.filename)
+        # usersave.save()
+        print('upload_image filename: ' + filename)
+        flash('Image successfully uploaded and displayed below')
+        o=url_for('static', filename='uploads/' + filename)
+        l = 'https://whatsapptestflask.herokuapp.com'+url_for('static', filename='images/' + filename)
+        messenger = WhatsApp(environ.get("TOKEN"), phone_number_id=environ.get("PHONE_NUMBER_ID")) #this should be writen as
 
+        # For sending  images
+        response = messenger.send_image(image=l,recipient_id="923462901820",)
+        # response = messenger.send_audio(audio=l,recipient_id="923462901820")
+        # response = messenger.send_video(video=l,recipient_id="923462901820",)
+        # response = messenger.send_document(document=l,recipient_id="923462901820",)
+        # For sending an Image
+        # messenger.send_image(
+        #         image="https://i.imgur.com/YSJayCb.jpeg",
+        #         recipient_id="91989155xxxx",
+        #     )
+        print(response)
+        print('url is',l)
+
+        return redirect(url_for('static', filename='images/' + filename), code=301)
+    else:
+        flash('Allowed image types are -> png, jpg, jpeg, gif')
+        return redirect(request.url)
+
+    return jsonify({"success": True, "response": "Pet added"})
+@app.route('/sendimage', methods=['POST'])
+def upload_image2():
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        flash('No image selected for uploading')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # file.save(secure_filename(file.filename))
+        # usersave = User( profile_pic=file.filename)
+        # usersave.save()
+        print('upload_image filename: ' + filename)
+        flash('Image successfully uploaded and displayed below')
+        o=url_for('static', filename='uploads/' + filename)
+        l = 'https://whatsapptestflask.herokuapp.com'+url_for('static', filename='images/' + filename)
+        messenger = WhatsApp(environ.get("TOKEN"), phone_number_id=environ.get("PHONE_NUMBER_ID")) #this should be writen as
+
+        # For sending  images
+        response = messenger.send_image(image=l,recipient_id="923462901820",)
+        # response = messenger.send_audio(audio=l,recipient_id="923462901820")
+        # response = messenger.send_video(video=l,recipient_id="923462901820",)
+        # response = messenger.send_document(document=l,recipient_id="923462901820",)
+        # For sending an Image
+        # messenger.send_image(
+        #         image="https://i.imgur.com/YSJayCb.jpeg",
+        #         recipient_id="91989155xxxx",
+        #     )
+        print(response)
+        print('url is',l)
+
+        return redirect(url_for('static', filename='images/' + filename), code=301)
+
+    else:
+        flash('Allowed image types are -> png, jpg, jpeg, gif')
+        return redirect(request.url)
+
+    return jsonify({"success": True, "response": "Pet added"})
+@app.route('/senddoc', methods=['POST'])
+def upload_image3():
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        flash('No image selected for uploading')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # file.save(secure_filename(file.filename))
+        # usersave = User( profile_pic=file.filename)
+        # usersave.save()
+        print('upload_image filename: ' + filename)
+        flash('Image successfully uploaded and displayed below')
+        o=url_for('static', filename='uploads/' + filename)
+        l = 'https://whatsapptestflask.herokuapp.com'+url_for('static', filename='images/' + filename)
+        messenger = WhatsApp(environ.get("TOKEN"), phone_number_id=environ.get("PHONE_NUMBER_ID")) #this should be writen as
+
+        # For sending  images
+        # response = messenger.send_image(image=l,recipient_id="923462901820",)
+        # response = messenger.send_audio(audio=l,recipient_id="923462901820")
+        # response = messenger.send_video(video=l,recipient_id="923462901820",)
+        response = messenger.send_document(document=l,recipient_id="923462901820",)
+        # For sending an Image
+        # messenger.send_image(
+        #         image="https://i.imgur.com/YSJayCb.jpeg",
+        #         recipient_id="91989155xxxx",
+        #     )
+        print(response)
+        print('url is',l)
+
+        return redirect(url_for('static', filename='images/' + filename), code=301)
+
+    else:
+        flash('Allowed image types are -> png, jpg, jpeg, gif')
+        return redirect(request.url)
+
+    return jsonify({"success": True, "response": "Pet added"})
+@app.route('/sendaudio', methods=['POST'])
+def upload_image4():
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        flash('No image selected for uploading')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # file.save(secure_filename(file.filename))
+        # usersave = User( profile_pic=file.filename)
+        # usersave.save()
+        print('upload_image filename: ' + filename)
+        flash('Image successfully uploaded and displayed below')
+        o=url_for('static', filename='uploads/' + filename)
+        l = 'https://whatsapptestflask.herokuapp.com'+url_for('static', filename='images/' + filename)
+        messenger = WhatsApp(environ.get("TOKEN"), phone_number_id=environ.get("PHONE_NUMBER_ID")) #this should be writen as
+
+        # For sending  images
+        # response = messenger.send_image(image=l,recipient_id="923462901820",)
+        response = messenger.send_audio(audio=l,recipient_id="923462901820")
+        # response = messenger.send_video(video=l,recipient_id="923462901820",)
+        # response = messenger.send_document(document=l,recipient_id="923462901820",)
+        # For sending an Image
+        # messenger.send_image(
+        #         image="https://i.imgur.com/YSJayCb.jpeg",
+        #         recipient_id="91989155xxxx",
+        #     )
+        print(response)
+        print('url is',l)
+
+        return redirect(url_for('static', filename='images/' + filename), code=301)
+
+    else:
+        flash('Allowed image types are -> png, jpg, jpeg, gif')
+        return redirect(request.url)
+
+    return jsonify({"success": True, "response": "Pet added"})
+@app.route('/sendvideo', methods=['POST'])
+def upload_image5():
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        flash('No image selected for uploading')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # file.save(secure_filename(file.filename))
+        # usersave = User( profile_pic=file.filename)
+        # usersave.save()
+        print('upload_image filename: ' + filename)
+        flash('Image successfully uploaded and displayed below')
+        o=url_for('static', filename='uploads/' + filename)
+        l = 'https://whatsapptestflask.herokuapp.com'+url_for('static', filename='images/' + filename)
+        messenger = WhatsApp(environ.get("TOKEN"), phone_number_id=environ.get("PHONE_NUMBER_ID")) #this should be writen as
+
+        # For sending  images
+        # response = messenger.send_image(image=l,recipient_id="923462901820",)
+        # response = messenger.send_audio(audio=l,recipient_id="923462901820")
+        response = messenger.send_video(video=l,recipient_id="923462901820",)
+        # response = messenger.send_document(document=l,recipient_id="923462901820",)
+        # For sending an Image
+        # messenger.send_image(
+        #         image="https://i.imgur.com/YSJayCb.jpeg",
+        #         recipient_id="91989155xxxx",
+        #     )
+        print(response)
+        print('url is',l)
+
+        return redirect(url_for('static', filename='images/' + filename), code=301)
+
+    else:
+        flash('Allowed image types are -> png, jpg, jpeg, gif')
+        return redirect(request.url)
+
+    return jsonify({"success": True, "response": "Pet added"})
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
