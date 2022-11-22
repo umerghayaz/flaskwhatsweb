@@ -14,25 +14,8 @@ import logging
 app = Flask(__name__)
 from flask_cors import CORS, cross_origin
 CORS(app)
-@cross_origin()
-@app.route('/message', methods=['POST'])
-def create_pet():
-    pet_data = request.json
 
-    name = pet_data['name']
-    print(name)
-    messenger = WhatsApp(environ.get("TOKEN"),phone_number_id=environ.get("PHONE_NUMBER_ID"))  # this should be writen as
-
-    # For sending  images
-    # response = messenger.send_image(image=l,recipient_id="923462901820",)
-    # response = messenger.send_audio(audio=l,recipient_id="923462901820")
-    # response = messenger.send_video(video=l,recipient_id="923462901820",)
-    # response = messenger.send_document(document=l, recipient_id="923462901820", )
-    messenger.send_message(name, recipient_id="923462901820")
-
-
-    return jsonify({"success": True, "response": "Pet added"})
-@app.route('/sendimage', methods=['POST'])
+# @app.route('/sendimage', methods=['POST'])
 
 # app.config['SQLALCHEMY_DATABASE_URI']='postgresql+psycopg2://wslnapfcxanodr:a7264b32be99407001919e87affb1e06e86a4f8a844daa4eb722678aed8d4cfe@ec2-54-163-34-107.compute-1.amazonaws.com:5432/dfb4pqic2dqauj'
 # app.config['SQLALCHEMY_DATABASE_URI']='postgresql+postgres://hfajwxasfwdoos:e0b6d820210e1f674fbf7ccd02a88e30009b435291c3de994365d886721f0176@ec2-3-209-39-2.compute-1.amazonaws.com:5432/d89giqj71hltdv'
@@ -204,7 +187,24 @@ def hook():
             else:
                 print("No new message")
     return "ok"
+@cross_origin()
+@app.route('/message', methods=['POST'])
+def create_pet():
+    pet_data = request.json
 
+    name = pet_data['name']
+    print(name)
+    messenger = WhatsApp(environ.get("TOKEN"),phone_number_id=environ.get("PHONE_NUMBER_ID"))  # this should be writen as
+
+    # For sending  images
+    # response = messenger.send_image(image=l,recipient_id="923462901820",)
+    # response = messenger.send_audio(audio=l,recipient_id="923462901820")
+    # response = messenger.send_video(video=l,recipient_id="923462901820",)
+    # response = messenger.send_document(document=l, recipient_id="923462901820", )
+    messenger.send_message(name, recipient_id="923462901820")
+
+
+    return jsonify({"success": True, "response": "Pet added"})
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
