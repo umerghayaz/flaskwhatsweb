@@ -4,6 +4,7 @@ from heyoo import WhatsApp
 # messenger.send_message('Your message ', '923462901820')
 import os
 import json
+
 from heyoo import WhatsApp
 from os import environ
 from flask import Flask, request, make_response, jsonify
@@ -14,6 +15,7 @@ import logging
 app = Flask(__name__)
 from flask_cors import CORS, cross_origin
 CORS(app)
+messenger = WhatsApp(environ.get("TOKEN"), phone_number_id=environ.get("PHONE_NUMBER_ID"))
 
 # @app.route('/sendimage', methods=['POST'])
 
@@ -48,7 +50,7 @@ CORS(app)
     #
 #     def __repr__(self):
 #         return '<E-mail %r>' % self.sender_response
-messenger = WhatsApp(environ.get("TOKEN"), phone_number_id=environ.get("PHONE_NUMBER_ID")) #this should be writen as# #WhatsApp(token = "inpust accesstoken", phone_number_id="input phone number id") #messages are not recieved without this pattern
+#this should be writen as# #WhatsApp(token = "inpust accesstoken", phone_number_id="input phone number id") #messages are not recieved without this pattern
 # #
 # #
 VERIFY_TOKEN = 'umer' #application secret here
