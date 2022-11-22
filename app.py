@@ -89,32 +89,39 @@ def hook():
                 f"New Message; sender:{mobile} name:{name} type:{message_type}"
             )
             if message_type == "text":
-                message = messenger.get_message(data)
+                mobile = messenger.get_mobile(data)
                 name = messenger.get_name(data)
-                logging.info("Message: %s", message)
+                message = messenger.get_message(data)
+                logging.info("Message: %s", message,'mobile',mobile,'name',name)
                 # pet = Sender(sender_name=name, sender_number=mobile, sender_message_type=type,sender_message=message)
 
                 # messenger.send_message(f"Hi {name}, nice to connect with you", mobile)
 
             elif message_type == "interactive":
+                mobile = messenger.get_mobile(data)
+                name = messenger.get_name(data)
                 message_response = messenger.get_interactive_response(data)
                 print('message_response',message_response)
                 intractive_type = message_response.get("type")
                 message_id = message_response[intractive_type]["id"]
                 message_text = message_response[intractive_type]["title"]
-                print('intractive_type',intractive_type,'message_id',message_id,'message_text',message_text)
+                print('intractive_type',intractive_type,'message_id',message_id,'message_text',message_text,'mobile',mobile,'name',name)
                 # logging.info(f"Interactive Message; {message_id}: {message_text}")
 
             elif message_type == "location":
+                mobile = messenger.get_mobile(data)
+                name = messenger.get_name(data)
                 message_location = messenger.get_location(data)
                 print('message_location',message_location)
                 message_latitude = message_location["latitude"]
                 message_longitude = message_location["longitude"]
                 # pet = Sender(sender_name=name, sender_number=mobile, sender_message_type=type, sender_message=message)
-                print('message_latitude',message_latitude,'message_longitude',message_longitude)
+                print('message_latitude',message_latitude,'message_longitude',message_longitude,'mobile',mobile,'name',name)
                 # logging.info("Location: %s, %s", message_latitude, message_longitude)
 
             elif message_type == "image":
+                mobile = messenger.get_mobile(data)
+                name = messenger.get_name(data)
                 image = messenger.get_image(data)
                 print(image)
                 image_id, mime_type = image["id"], image["mime_type"]
@@ -122,41 +129,47 @@ def hook():
                 print(f"image_url {image_url}")
                 # logging.info(f"{mobile} image_url {image_url}")
                 image_filename = messenger.download_media(image_url, mime_type)
-                print('image_filename',image_filename)
+                print('image_filename',image_filename,'mobile',mobile,'name',name)
                 # print(f"{mobile} sent image {image_filename}")
                 # logging.info('image_filename',image_filename)
 
 
             elif message_type == "video":
+                mobile = messenger.get_mobile(data)
+                name = messenger.get_name(data)
                 video = messenger.get_video(data)
                 video_id, mime_type = video["id"], video["mime_type"]
                 video_url = messenger.query_media_url(video_id)
                 print(f"{mobile} video_url {video_url}")
                 # logging.info(f"{mobile} video_url {video_url}")
                 video_filename = messenger.download_media(video_url, mime_type)
-                print('video_filename', video_filename)
+                print('video_filename', video_filename,'mobile',mobile,'name',namee)
                 # print(f"{mobile} sent video {video_filename}")
                 # logging.info('video_filename', video_filename)
 
             elif message_type == "audio":
+                mobile = messenger.get_mobile(data)
+                name = messenger.get_name(data)
                 audio = messenger.get_audio(data)
                 audio_id, mime_type = audio["id"], audio["mime_type"]
                 audio_url = messenger.query_media_url(audio_id)
                 print(f" audio_url {audio_url}")
                 # logging.info(f"{mobile} audio_url {audio_url}")
                 audio_filename = messenger.download_media(audio_url, mime_type)
-                print('audio_filename', audio_filename)
+                print('audio_filename', audio_filename,'mobile',mobile,'name',name)
                 # print(f" sent audio {audio_filename}")
                 # logging.info('audio_filename', audio_filename)
 
             elif message_type == "file":
+                mobile = messenger.get_mobile(data)
+                name = messenger.get_name(data)
                 file = messenger.get_file(data)
                 file_id, mime_type = file["id"], file["mime_type"]
                 file_url = messenger.query_media_url(file_id)
                 print(f" file_url {file_url}")
                 # logging.info(f"{mobile} file_url {file_url}")
                 file_filename = messenger.download_media(file_url, mime_type)
-                print('file_filename', file_filename)
+                print('file_filename', file_filename,'mobile',mobile,'name',name)
                 # print(f"{mobile} sent file {file_filename}")
                 # logging.info('file_filename', file_filename)
             else:
