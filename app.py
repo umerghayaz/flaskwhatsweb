@@ -143,7 +143,7 @@ def hook():
                 print(f"{mobile} video_url {video_url}")
                 # logging.info(f"{mobile} video_url {video_url}")
                 video_filename = messenger.download_media(video_url, mime_type)
-                print('video_filename', video_filename,'mobile',mobile,'name',namee)
+                print('video_filename', video_filename,'mobile',mobile,'name',name)
                 # print(f"{mobile} sent video {video_filename}")
                 # logging.info('video_filename', video_filename)
 
